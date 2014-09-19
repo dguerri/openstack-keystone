@@ -1,0 +1,19 @@
+---
+
+- name: Create admin tenant
+  keystone_user: tenant=admin
+                 tenant_description="Admin Tenant"
+                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+                 token="{{ admin_token }}"
+
+- name: Create service tenant
+  keystone_user: tenant=service
+                 tenant_description="Service Tenant"
+                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+                 token="{{ admin_token }}"
+
+- name: Create demo tenant
+  keystone_user: tenant=demo
+                 tenant_description="Demo Tenant"
+                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+                 token="{{ admin_token }}"

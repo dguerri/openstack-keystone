@@ -1,0 +1,18 @@
+---
+
+keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
+
+mysql_hostname: localhost
+
+mysql_admin_username: root
+mysql_rootpass: mysql_root_default
+
+keystone_dbpass: keystone_dbpass_default
+
+admin_pass: admin_pass_default
+demo_pass: demo_pass_default
+
+admin_token: admin_token_default
+
+keystone_admin_port: 35357
+keystone_port: 5000

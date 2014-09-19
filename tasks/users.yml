@@ -1,0 +1,17 @@
+---
+
+- name: Create keystone admin user in admin tenant
+  keystone_user: user=admin
+                 tenant=admin
+                 password="{{ admin_pass }}"
+                 email=admin@localhost
+                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+                 token="{{ admin_token }}"
+
+- name: Create keystone demo user in demo tenant
+  keystone_user: user=demo
+                 tenant=demo
+                 password="{{ demo_pass }}"
+                 email=demo@localhost
+                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+                 token="{{ admin_token }}"

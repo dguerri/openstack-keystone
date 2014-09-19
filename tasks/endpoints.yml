@@ -1,0 +1,34 @@
+---
+
+- name: "Dump service list"
+  shell: keystone service-list
+  register: service_list
+  changed_when: false
+  environment: openstack_service_env
+
+- name: "Dump endpoint list"
+  shell: keystone endpoint-list
+  register: endpoint_list
+  changed_when: false
+  environment: openstack_service_env
+
+- name: Create the service entity for the identity service
+  shell: keystone service-create --name keystone --type identity --description="OpenStack Identity"
+  environment: openstack_service_env
+  when: "service_list.stdout.find('keystone') == -1"
+
+- name: "Dump identity service id"
+  shell: keystone service-list | awk '/ identity / {print $2}'
+  register: identity_service_id
+  changed_when: false
+  environment: openstack_service_env
+
+- name: Create the API endpoint for the Identity service
+  shell: >
+    keystone endpoint-create \
+      --service-id={{ identity_service_id.stdout }} \
+      --publicurl=http://{{ keystone_hostname }}:{{ keystone_port }}/v2.0 \
+      --internalurl=http://{{ keystone_hostname }}:{{ keystone_port }}/v2.0 \
+      --adminurl=http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0
+  when: "endpoint_list.stdout.find('{{ identity_service_id.stdout }}') == -1"
+  environment: openstack_service_env

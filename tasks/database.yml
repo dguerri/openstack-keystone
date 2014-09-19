@@ -1,0 +1,36 @@
+---
+
+- name: Create keystone db
+  mysql_db: name="{{ item }}"
+            state=present
+            login_host="{{ mysql_hostname }}"
+            login_user="{{ mysql_admin_username }}"
+            login_password="{{ mysql_rootpass }}"
+  with_items:
+    - keystone
+  notify:
+    - Sync keystone db
+    - Restart keystone
+
+- name: Create keystone user
+  mysql_user: name="{{ item.name }}"
+              host="{{ item.host }}"
+              password="{{ item.password }}"
+              priv="{{ item.privs }}"
+              state=present
+              login_host="{{ mysql_hostname }}"
+              login_user="{{ mysql_admin_username }}"
+              login_password="{{ mysql_rootpass }}"
+              append_privs=yes
+  with_items:
+    - name:     keystone
+      host:     localhost
+      password: "{{ keystone_dbpass }}"
+      privs:    keystone.*:ALL
+    - name:     keystone
+      host:     "{{ keystone_hostname }}"
+      password: "{{ keystone_dbpass }}"
+      privs:    keystone.*:ALL
+  notify:
+    - Sync keystone db
+    - Restart keystone

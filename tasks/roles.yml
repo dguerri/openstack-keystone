@@ -1,0 +1,15 @@
+---
+
+- name: Add admin role to user admin in tenant admin
+  keystone_user: role=admin
+                 user=admin
+                 tenant=admin
+                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+                 token="{{ admin_token }}"
+
+- name: Add _member role to user demo in tenant demo
+  keystone_user: role=_member_
+                 user=demo
+                 tenant=demo
+                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+                 token="{{ admin_token }}"

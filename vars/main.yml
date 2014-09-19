@@ -1,0 +1,8 @@
+---
+# vars file for keystone
+
+openstack_service_env:
+  OS_SERVICE_TOKEN: "{{ admin_token }}"
+  OS_SERVICE_ENDPOINT: "http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+
+

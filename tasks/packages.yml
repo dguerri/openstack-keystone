@@ -1,0 +1,7 @@
+---
+
+- name: Install keystone service and client
+  apt: name="{{ item }}" state=present
+  with_items:
+    - keystone
+    - python-keystoneclient

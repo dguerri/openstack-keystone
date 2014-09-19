@@ -1,0 +1,12 @@
+---
+# handlers file for keystone
+
+- name: Sync keystone db
+  shell: keystone-manage db_sync
+  sudo: yes
+  sudo_user: keystone
+  notify:
+    - Restart keystone
+
+- name: Restart keystone
+  service: name=keystone state=restarted

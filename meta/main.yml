@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Davide Guerri
+  description:
+  company: None
+  license: Apache
+  min_ansible_version: 1.7
+  categories:
+    - cloud
+  dependencies: []
+  platforms:
+    - name: Ubuntu
+      versions:
+        - precise
+        - quantal
+        - raring
+        - saucy
+        - trusty

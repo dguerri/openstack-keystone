@@ -1,0 +1,19 @@
+---
+
+- name: Configure keystone
+  ini_file: dest=/etc/keystone/keystone.conf
+            section="{{ item.section }}"
+            option="{{ item.option }}"
+            value="{{ item.value }}"
+  with_items:
+    - section:  DEFAULT
+      option:   admin_token
+      value:    "{{ admin_token }}"
+    - section:  DEFAULT
+      option:   log_dir
+      value:    /var/log/keystone
+    - section:  database
+      option:   connection
+      value:    "mysql://keystone:{{ keystone_dbpass }}@{{ mysql_hostname }}/keystone"
+  notify:
+    - Restart keystone

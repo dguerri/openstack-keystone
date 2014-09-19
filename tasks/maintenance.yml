@@ -1,0 +1,12 @@
+---
+
+- name: Remove useless SQLite db file
+  file: path=/var/lib/keystone/keystone.db state=absent
+
+- name: Add cronjob that remove keystone expired token
+  cron: name="remove keystone expired token"
+        minute=0
+        hour=*/1
+        user=keystone
+        job="/usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&1"
+        cron_file="remove-keystone-expired-tokens"
