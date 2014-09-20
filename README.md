@@ -45,7 +45,7 @@ Example Playbook
 
     - hosts: keystone001
       roles:
-        - role: keystone
+        - role: openstack-keystone
           mysql_rootpass: "{{ MYSQL_ROOT }}"
           keystone_dbpass: "{{ KEYSTONEDB_PASS }}"
           admin_token: "{{ ADMIN_TOKEN }}"
