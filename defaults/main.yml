@@ -1,18 +1,33 @@
 ---
 
-keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
+#
+# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-mysql_hostname: localhost
-
-mysql_admin_username: root
-mysql_rootpass: mysql_root_default
-
-keystone_dbpass: keystone_dbpass_default
-
+# Keystone
 admin_pass: admin_pass_default
-demo_pass: demo_pass_default
-
 admin_token: admin_token_default
-
+demo_pass: demo_pass_default
 keystone_admin_port: 35357
+keystone_dbpass: keystone_dbpass_default
+keystone_hostname: localhost
 keystone_port: 5000
+keystone_protocol: http
+
+# MySQL
+mysql_admin_username: root
+mysql_hostname: localhost
+mysql_rootpass: mysql_root_default

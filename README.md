@@ -15,25 +15,27 @@ A MySQL server. See `mysql_hostname`, `mysql_admin_username` and
 Role Variables
 --------------
 
-# Other systems/serivces
-* `mysql_hostname`:       MySQL server address. Defaults to "localhost".
-* `mysql_admin_username`: MySQL admin username. Defaults to "root".
-* `mysql_rootpass`:       MySQL admin password. Defaults to "mysql\_root\_default".
+### Keystone (set by this role)
 
-# Role specific
-* `keystone_hostname`:    hostname/IP address where this role runs.
-                          It will be used to set keystone endpoints.
-                          Defaults to the first interface IP address (i.e., eth0).
+| Name | Default value | Description | Note |
+|---  |---  |---  |--- |
+| `admin_pass` | `admin_pass_default` | Desired admin password ||
+| `admin_token` | `admin_token_default` | Desired service token ||
+| `demo_pass` | `demo_pass_default` | Desired demo password ||
+| `keystone_admin_port` | `35357` | Desired keystone admin service port ||
+| `keystone_dbpass` | `keystone_dbpass_default` | Desired keystone user password for the keystone database ||
+| `keystone_hostname` | `localhost` | Hostname/IP address where this role runs, it will be used to set keystone endpoints ||
+| `keystone_port` | `5000` | Desired keystone service port ||
+| `keystone_protocol` | `http` | Desired keystone protocol (http/https) | WiP, do not use. |
 
-* `keystone_dbpass`:      Desired keystone user password for the keystone database.
-                          Defaults to "keystone\_dbpass\_default".
 
-* `admin_token`:          Desired service token. Defaults to "admin\_token\_default".
-* `admin_pass`:           Desired admin password. Defaults to "admin\_pass\_default".
-* `demo_pass`:            Desired demo password. Defaults to "demo\_pass\_default".
+### MySQL (must exist)
 
-* `keystone_admin_port`:  Desired keystone admin service port. Defaults to "35357".
-* `keystone_port`:        Desired keystone service port. Defaults to "5000".
+| Name | Default value | Description | Note |
+|---  |---  |---  |--- |
+| `mysql_admin_username` | `root` | MySQL admin username ||
+| `mysql_hostname` | `localhost` | MySQL server address ||
+| `mysql_rootpass` | `mysql_root_default` | MySQL admin password ||
 
 Dependencies
 ------------
@@ -46,11 +48,12 @@ Example Playbook
     - hosts: keystone001
       roles:
         - role: openstack-keystone
-          mysql_rootpass: "{{ MYSQL_ROOT }}"
-          keystone_dbpass: "{{ KEYSTONEDB_PASS }}"
-          admin_token: "{{ ADMIN_TOKEN }}"
-          admin_pass: "{{ ADMIN_PASS }}"
-          demo_pass: "{{ DEMO_PASS }}"
+            mysql_rootpass: "{{ MYSQL_ROOT }}"
+            keystone_dbpass: "{{ KEYSTONEDB_PASS }}"
+            admin_token: "{{ ADMIN_TOKEN }}"
+            admin_pass: "{{ ADMIN_PASS }}"
+            demo_pass: "{{ DEMO_PASS }}"
+            keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
 
 License
 -------
