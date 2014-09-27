@@ -48,12 +48,12 @@ Example Playbook
     - hosts: keystone001
       roles:
         - role: openstack-keystone
-            mysql_rootpass: "{{ MYSQL_ROOT }}"
-            keystone_dbpass: "{{ KEYSTONEDB_PASS }}"
-            admin_token: "{{ ADMIN_TOKEN }}"
-            admin_pass: "{{ ADMIN_PASS }}"
-            demo_pass: "{{ DEMO_PASS }}"
-            keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
+          mysql_rootpass: "{{ MYSQL_ROOT }}"
+          keystone_dbpass: "{{ KEYSTONEDB_PASS }}"
+          admin_token: "{{ ADMIN_TOKEN }}"
+          admin_pass: "{{ ADMIN_PASS }}"
+          demo_pass: "{{ DEMO_PASS }}"
+          keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
 
 License
 -------
