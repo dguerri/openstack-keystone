@@ -55,6 +55,13 @@ Example Playbook
           demo_pass: "{{ DEMO_PASS }}"
           keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
 
+---
+
+A complete Ansible playbook demo, which uses this role, is available here: <https://github.com/dguerri/vagrant-ansible-openstack>
+
+---
+
+
 License
 -------
 
