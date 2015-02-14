@@ -40,7 +40,7 @@
   changed_when: false
   environment: openstack_service_env
 
-- name: Create the API endpoint for the Identity service
+- name: Create the API endpoint for the identity service
   shell: >
     keystone endpoint-create \
       --service-id={{ identity_service_id.stdout }} \
