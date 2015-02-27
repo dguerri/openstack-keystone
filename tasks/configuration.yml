@@ -29,8 +29,18 @@
     - section:  DEFAULT
       option:   log_dir
       value:    /var/log/keystone
+  notify:
+    - Reload keystone
+
+- name: Configure keystone database
+  ini_file: dest=/etc/keystone/keystone.conf
+            section="{{ item.section }}"
+            option="{{ item.option }}"
+            value="{{ item.value }}"
+  with_items:
     - section:  database
       option:   connection
-      value:    "mysql://keystone:{{ keystone_dbpass }}@{{ mysql_hostname }}/keystone"
+      value:    "mysql://{{ mysql_keystone_user }}:{{ mysql_keystone_pass }}@{{ mysql_hostname }}/{{ mysql_keystone_db }}"
   notify:
-    - Restart keystone
+    - Sync keystone db
+    - Reload keystone

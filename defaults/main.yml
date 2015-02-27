@@ -28,6 +28,7 @@ keystone_port: 5000
 keystone_protocol: http
 
 # MySQL
-mysql_admin_username: root
 mysql_hostname: localhost
-mysql_rootpass: mysql_root_default
+mysql_keystone_db: mysql_keystone_db
+mysql_keystone_user: mysql_keystone_user
+mysql_keystone_pass: mysql_keystone_pass

@@ -23,7 +23,6 @@ Role Variables
 | `admin_token` | `admin_token_default` | Desired service token ||
 | `demo_pass` | `demo_pass_default` | Desired demo password ||
 | `keystone_admin_port` | `35357` | Desired keystone admin service port ||
-| `keystone_dbpass` | `keystone_dbpass_default` | Desired keystone user password for the keystone database ||
 | `keystone_hostname` | `localhost` | Hostname/IP address where this role runs, it will be used to set keystone endpoints ||
 | `keystone_port` | `5000` | Desired keystone service port ||
 | `keystone_protocol` | `http` | Desired keystone protocol (http/https) | WiP, do not use. |
@@ -33,9 +32,11 @@ Role Variables
 
 | Name | Default value | Description | Note |
 |---  |---  |---  |--- |
-| `mysql_admin_username` | `root` | MySQL admin username ||
 | `mysql_hostname` | `localhost` | MySQL server address ||
-| `mysql_rootpass` | `mysql_root_default` | MySQL admin password ||
+| `mysql_keystone_db` | `mysql_keystone_db` | Keystone db name ||
+| `mysql_keystone_user` | `mysql_keystone_user` | keystone db user ||
+| `mysql_keystone_pass` | `mysql_keystone_pass` | Keyston db password ||
+
 
 Dependencies
 ------------

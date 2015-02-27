@@ -20,7 +20,6 @@
 - meta: flush_handlers
 
 - include: packages.yml
-- include: database.yml
 - include: configuration.yml
 
 - meta: flush_handlers

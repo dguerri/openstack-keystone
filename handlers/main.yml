@@ -17,6 +17,15 @@
 # limitations under the License.
 #
 
+- name: Start keystone
+  service: name=keystone state=started
+
+- name: Reload keystone
+  service: name=keystone state=reloaded
+
+- name: Restart keystone
+  service: name=keystone state=restarted
+
 - name: Sync keystone db
   shell: keystone-manage db_sync
   sudo: yes
@@ -24,5 +33,3 @@
   notify:
     - Restart keystone
 
-- name: Restart keystone
-  service: name=keystone state=restarted
