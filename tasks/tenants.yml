@@ -1,7 +1,7 @@
 ---
 
 #
-# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
+# Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
     tenant_description="{{ item.description|default('') }}"
     endpoint="{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
     token="{{ keystone_admin_token }}"
+    state="{{ item.state|default('present') }}"
   register: result
   until: not result|failed
   retries: "{{ keystone_api_retries }}"

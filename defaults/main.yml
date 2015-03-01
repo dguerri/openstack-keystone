@@ -23,6 +23,11 @@ keystone_admin_port: 35357
 keystone_hostname: localhost
 keystone_port: 5000
 keystone_protocol: http
+keystone_tenants: []
+keystone_users: []
+keystone_roles: []
+keystone_services: []
+keystone_endpoints: []
 
 # Database
 keystone_database_url: sqlite:////var/lib/keystone/keystone.db

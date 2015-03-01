@@ -25,6 +25,7 @@
     email="{{ item.email|default('nobody@localhost') }}"
     endpoint="{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
     token="{{ keystone_admin_token }}"
+    state="{{ item.state|default('present') }}"
   with_items: keystone_users
   register: result
   until: not result|failed
