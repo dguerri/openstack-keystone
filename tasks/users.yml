@@ -24,6 +24,10 @@
                  email=admin@localhost
                  endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
                  token="{{ admin_token }}"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10
 
 - name: Create keystone demo user in demo tenant
   keystone_user: user=demo
@@ -32,3 +36,7 @@
                  email=demo@localhost
                  endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
                  token="{{ admin_token }}"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10

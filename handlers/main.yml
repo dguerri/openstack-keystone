@@ -30,6 +30,10 @@
   command: keystone-manage db_sync
   sudo: yes
   sudo_user: keystone
+  register: result
+  until: not result|failed
+  retries: 2
+  delay: 10
   notify:
     - Restart keystone
 

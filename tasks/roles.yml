@@ -23,6 +23,10 @@
                  tenant=admin
                  endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
                  token="{{ admin_token }}"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10
 
 - name: Add _member_ role to user demo in tenant demo
   keystone_user: role=_member_
@@ -30,3 +34,7 @@
                  tenant=demo
                  endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
                  token="{{ admin_token }}"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10

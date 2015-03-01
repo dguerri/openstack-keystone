@@ -22,15 +22,27 @@
                  tenant_description="Admin Tenant"
                  endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
                  token="{{ admin_token }}"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10
 
 - name: Create service tenant
   keystone_user: tenant=service
                  tenant_description="Service Tenant"
                  endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
                  token="{{ admin_token }}"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10
 
 - name: Create demo tenant
   keystone_user: tenant=demo
                  tenant_description="Demo Tenant"
                  endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
                  token="{{ admin_token }}"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10

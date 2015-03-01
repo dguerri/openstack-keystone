@@ -22,23 +22,36 @@
   register: service_list
   changed_when: false
   environment: openstack_service_env
+  until: not service_list|failed
+  retries: 5
+  delay: 10
 
 - name: "Dump endpoint list"
   shell: keystone endpoint-list
   register: endpoint_list
   changed_when: false
   environment: openstack_service_env
+  until: not endpoint_list|failed
+  retries: 5
+  delay: 10
 
 - name: Create the service entity for the identity service
   shell: keystone service-create --name keystone --type identity --description="OpenStack Identity"
   environment: openstack_service_env
   when: "service_list.stdout.find('keystone') == -1"
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10
 
 - name: "Dump identity service id"
   shell: keystone service-list | awk '/ identity / {print $2}'
   register: identity_service_id
   changed_when: false
   environment: openstack_service_env
+  until: not identity_service_id|failed
+  retries: 5
+  delay: 10
 
 - name: Create the API endpoint for the identity service
   shell: >
@@ -49,3 +62,7 @@
       --adminurl={{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0
   when: "endpoint_list.stdout.find('{{ identity_service_id.stdout }}') == -1"
   environment: openstack_service_env
+  register: result
+  until: not result|failed
+  retries: 5
+  delay: 10
