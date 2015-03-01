@@ -23,7 +23,7 @@
   keystone_service: >
     name="{{ item.name }}"
     service_type="{{ item.service_type }}"
-    description="{{ item.description }}"
+    description="{{ item.description|default('Not provided') }}"
     endpoint="{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
     token="{{ keystone_admin_token }}"
     state="{{ item.state|default('present') }}"
