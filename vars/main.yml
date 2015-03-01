@@ -17,9 +17,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-openstack_service_env:
-  OS_SERVICE_TOKEN: "{{ keystone_admin_token }}"
-  OS_SERVICE_ENDPOINT: "{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-
-
