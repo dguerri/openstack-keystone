@@ -17,32 +17,25 @@
 # limitations under the License.
 #
 
-- name: Create admin tenant
-  keystone_user: tenant=admin
-                 tenant_description="Admin Tenant"
-                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-                 token="{{ admin_token }}"
+- name: Create Keystone service tenant
+  keystone_user: >
+    tenant=service
+    tenant_description="Service Tenant"
+    endpoint="{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+    token="{{ keystone_admin_token }}"
   register: result
   until: not result|failed
-  retries: 5
-  delay: 10
+  retries: "{{ keystone_api_retries }}"
+  delay: "{{ keystone_api_retries_delay }}"
 
-- name: Create service tenant
-  keystone_user: tenant=service
-                 tenant_description="Service Tenant"
-                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-                 token="{{ admin_token }}"
+- name: Create Keystone tenants
+  keystone_user: >
+    tenant="{{ item.name }}"
+    tenant_description="{{ item.description|default('') }}"
+    endpoint="{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+    token="{{ keystone_admin_token }}"
   register: result
   until: not result|failed
-  retries: 5
-  delay: 10
-
-- name: Create demo tenant
-  keystone_user: tenant=demo
-                 tenant_description="Demo Tenant"
-                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-                 token="{{ admin_token }}"
-  register: result
-  until: not result|failed
-  retries: 5
-  delay: 10
+  retries: "{{ keystone_api_retries }}"
+  delay: "{{ keystone_api_retries_delay }}"
+  with_items: keystone_tenants

@@ -17,24 +17,15 @@
 # limitations under the License.
 #
 
-- name: Add admin role to user admin in tenant admin
-  keystone_user: role=admin
-                 user=admin
-                 tenant=admin
-                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-                 token="{{ admin_token }}"
+- name: Add Keystone roles to defined users in defined tenants
+  keystone_user: >
+    role="{{ item.name }}"
+    user="{{ item.user }}"
+    tenant="{{ item.tenant }}"
+    endpoint="{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+    token="{{ keystone_admin_token }}"
   register: result
   until: not result|failed
-  retries: 5
-  delay: 10
-
-- name: Add _member_ role to user demo in tenant demo
-  keystone_user: role=_member_
-                 user=demo
-                 tenant=demo
-                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-                 token="{{ admin_token }}"
-  register: result
-  until: not result|failed
-  retries: 5
-  delay: 10
+  retries: "{{ keystone_api_retries }}"
+  delay: "{{ keystone_api_retries_delay }}"
+  with_items: keystone_roles

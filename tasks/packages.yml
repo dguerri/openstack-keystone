@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-- name: Install keystone server
+- name: Install Keystone server
   apt: name=keystone state=present
   notify:
-    - Start keystone
+    - Start Keystone
 
-- name: Install keystone client
+- name: Install Keystone client
   apt: name=python-keystoneclient state=present

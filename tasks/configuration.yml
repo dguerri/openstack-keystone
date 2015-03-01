@@ -17,30 +17,32 @@
 # limitations under the License.
 #
 
-- name: Configure keystone
-  ini_file: dest=/etc/keystone/keystone.conf
-            section="{{ item.section }}"
-            option="{{ item.option }}"
-            value="{{ item.value }}"
+- name: Configure Keystone
+  ini_file: >
+    dest=/etc/keystone/keystone.conf
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
   with_items:
     - section:  DEFAULT
       option:   admin_token
-      value:    "{{ admin_token }}"
+      value:    "{{ keystone_admin_token }}"
     - section:  DEFAULT
       option:   log_dir
       value:    /var/log/keystone
   notify:
-    - Reload keystone
+    - Reload Keystone
 
-- name: Configure keystone database
-  ini_file: dest=/etc/keystone/keystone.conf
-            section="{{ item.section }}"
-            option="{{ item.option }}"
-            value="{{ item.value }}"
+- name: Configure Keystone database
+  ini_file: >
+    dest=/etc/keystone/keystone.conf
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
   with_items:
-    - section:  database
-      option:   connection
-      value:    "mysql://{{ mysql_keystone_user }}:{{ mysql_keystone_pass }}@{{ mysql_hostname }}/{{ mysql_keystone_db }}"
+    - section: database
+      option: connection
+      value: "{{ keystone_database_url }}"
   notify:
-    - Sync keystone db
-    - Reload keystone
+    - Sync Keystone database
+    - Reload Keystone

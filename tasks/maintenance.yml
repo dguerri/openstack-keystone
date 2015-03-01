@@ -17,11 +17,8 @@
 # limitations under the License.
 #
 
-- name: Remove useless SQLite db file
-  file: path=/var/lib/keystone/keystone.db state=absent
-
-- name: Add cronjob that remove keystone expired token
-  cron: name="remove keystone expired token"
+- name: Add a cronjob to remove Keystone expired token
+  cron: name="Remove keystone expired token"
         minute=0
         hour=*/1
         user=keystone

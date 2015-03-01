@@ -18,7 +18,7 @@
 #
 
 openstack_service_env:
-  OS_SERVICE_TOKEN: "{{ admin_token }}"
-  OS_SERVICE_ENDPOINT: "http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
+  OS_SERVICE_TOKEN: "{{ keystone_admin_token }}"
+  OS_SERVICE_ENDPOINT: "{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
 
 

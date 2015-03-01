@@ -24,10 +24,10 @@
 
 - meta: flush_handlers
 
-- name: Make sure keystone is started
+- name: Make sure Keystone is started
   service: name=keystone state=started
 
-- name: Wait keystone
+- name: Wait Keystone
   wait_for: host="{{ keystone_hostname }}" port="{{ keystone_admin_port }}" delay=2
 
 - include: maintenance.yml

@@ -19,23 +19,15 @@ Role Variables
 
 | Name | Default value | Description | Note |
 |---  |---  |---  |--- |
-| `admin_pass` | `admin_pass_default` | Desired admin password ||
-| `admin_token` | `admin_token_default` | Desired service token ||
-| `demo_pass` | `demo_pass_default` | Desired demo password ||
-| `keystone_admin_port` | `35357` | Desired keystone admin service port ||
+| `keystone_database_url` | `sqlite:////var/lib/keystone/keystone.db` | Database URI ||
 | `keystone_hostname` | `localhost` | Hostname/IP address where this role runs, it will be used to set keystone endpoints ||
+| `keystone_admin_port` | `35357` | Desired keystone admin service port ||
 | `keystone_port` | `5000` | Desired keystone service port ||
 | `keystone_protocol` | `http` | Desired keystone protocol (http/https) | WiP, do not use. |
-
-
-### MySQL (must exist)
-
-| Name | Default value | Description | Note |
-|---  |---  |---  |--- |
-| `mysql_hostname` | `localhost` | MySQL server address ||
-| `mysql_keystone_db` | `mysql_keystone_db` | Keystone db name ||
-| `mysql_keystone_user` | `mysql_keystone_user` | keystone db user ||
-| `mysql_keystone_pass` | `mysql_keystone_pass` | Keyston db password ||
+| `keystone_admin_token` | `keystone_admin_token` | Desired service token ||
+| `keystone_tenants` | - | Array of of hash with tenant `name` and `description` (see examples) ||
+| `keystone_users` | - | Array of hash with user: `name`, `password`, `tenant` and `email` (see examples) ||
+| `keystone_roles` | - | Array of hash with role: `name`, `user` and `tenant` (see examples) ||
 
 
 Dependencies
@@ -49,12 +41,18 @@ Example Playbook
     - hosts: keystone001
       roles:
         - role: openstack-keystone
-          mysql_rootpass: "{{ MYSQL_ROOT }}"
-          keystone_dbpass: "{{ KEYSTONEDB_PASS }}"
-          admin_token: "{{ ADMIN_TOKEN }}"
-          admin_pass: "{{ ADMIN_PASS }}"
-          demo_pass: "{{ DEMO_PASS }}"
+          keystone_database_url: "mysql://{{ MYSQL_KEYSTONE_USER }}:{{ MYSQL_KEYSTONE_PASS }}@{{ DATABASE_HOSTNAME }}/{{ MYSQL_KEYSTONE_DB }}"
           keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
+          keystone_admin_token: "{{ ADMIN_TOKEN }}"
+          keystone_tenants:
+            - { name: admin, description: "Admin tenant" }
+            - { name: demo, description: "Demo tenant"  }
+          keystone_users:
+            - { name: admin, password: "{{ ADMIN_PASS }}", tenant: admin, email: admin@localhost }
+            - { name: demo, password: "{{ DEMO_PASS }}", tenant: _member_, email: "demo@localhost" }
+          keystone_roles:
+            - { name: admin, user: admin, tenant: admin }
+            - { name: _member_, user: demo, tenant: demo  }
 
 ---
 

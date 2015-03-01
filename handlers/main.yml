@@ -17,23 +17,23 @@
 # limitations under the License.
 #
 
-- name: Start keystone
+- name: Start Keystone
   service: name=keystone state=started
 
-- name: Reload keystone
+- name: Reload Keystone
   service: name=keystone state=reloaded
 
-- name: Restart keystone
+- name: Restart Keystone
   service: name=keystone state=restarted
 
-- name: Sync keystone db
+- name: Sync Keystone database
   command: keystone-manage db_sync
   sudo: yes
   sudo_user: keystone
   register: result
   until: not result|failed
-  retries: 2
-  delay: 10
+  retries: "{{ keystone_api_retries }}"
+  delay: "{{ keystone_api_retries_delay }}"
   notify:
-    - Restart keystone
+    - Restart Keystone
 
