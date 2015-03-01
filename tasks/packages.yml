@@ -21,7 +21,7 @@
 - name: Install Keystone server
   apt: name=keystone state=present
   notify:
-    - Start Keystone
+    - Restart Keystone
 
 - name: Install Keystone client
   apt: name=python-keystoneclient state=present
