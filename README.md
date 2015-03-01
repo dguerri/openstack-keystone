@@ -8,8 +8,7 @@ _Tested on Ubuntu Precise (12.04) and Trusty (14.04)_
 Requirements
 ------------
 
-A MySQL server. See `mysql_hostname`, `mysql_admin_username` and
-`mysql_rootpass` below.
+A DBMS already configured with a user and a database (when applicable).
 
 
 Role Variables
@@ -85,7 +84,7 @@ License
 
 Apache
 
-Author Information
+Copyright
 ------------------
 
-Davide Guerri - davide.guerri@gmail.com
+Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>

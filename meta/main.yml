@@ -2,7 +2,7 @@
 galaxy_info:
   author: Davide Guerri
   description:
-  company: None
+  company: Hewlett-Packard Development Company, L.P.
   license: Apache
   min_ansible_version: 1.7
   categories:
