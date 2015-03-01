@@ -27,7 +27,7 @@
   service: name=keystone state=restarted
 
 - name: Sync keystone db
-  shell: keystone-manage db_sync
+  command: keystone-manage db_sync
   sudo: yes
   sudo_user: keystone
   notify:
