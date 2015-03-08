@@ -31,7 +31,6 @@
   wait_for: >
     host={{ keystone_hostname }}
     port={{ keystone_admin_port }}
-    delay=2
 
 - include: maintenance.yml
 

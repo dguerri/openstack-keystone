@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dguerri/openstack-keystone.svg)](https://travis-ci.org/dguerri/openstack-keystone)
+
 Keystone
 =========
 
