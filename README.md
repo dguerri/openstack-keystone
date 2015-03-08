@@ -1,7 +1,11 @@
-[![Build Status](https://travis-ci.org/dguerri/openstack-keystone.svg)](https://travis-ci.org/dguerri/openstack-keystone)
 
-Keystone
+Keystone OpenStack Ansible Role
 =========
+
+**Status**
+* [![Build Status](https://travis-ci.org/dguerri/openstack-keystone.svg?branch=master)](https://travis-ci.org/dguerri/openstack-keystone) on master branch
+* [![Build Status](https://travis-ci.org/dguerri/openstack-keystone.svg?branch=development)](https://travis-ci.org/dguerri/openstack-keystone) on development branch
+* [![Ansible Galaxy](http://img.shields.io/badge/dguerri-openstack--keystone-blue.svg)](https://galaxy.ansible.com/list#/roles/1770) on Ansible Galaxy
 
 OpenStack Keystone identity service installation.
 
@@ -26,7 +30,7 @@ Role Variables
 | `keystone_admin_port` | `35357` | Desired Keystone admin service port |
 | `keystone_bind_host` | `0.0.0.0` | On which IP Keystone public service should listen on |
 | `keystone_port` | `5000` | Desired Keystone service port |
-| `keystone_protocol` | `http` | Desired Keystone protocol (http/https) - WiP, do not use. |
+| `keystone_protocol` | `http` | Desired Keystone protocol (http/https) - WiP, do not use |
 | `keystone_admin_token` | `keystone_admin_token` | Desired service token |
 | `keystone_tenants` | `[ ]` | Array of of hash with tenant `name` and `description` (see examples) |
 | `keystone_users` | `[ ]` | Array of hash with user: `name`, `password`, `tenant` and `email` (see examples) |
@@ -34,7 +38,7 @@ Role Variables
 | `keystone_services` | `[ ]` | Array of hash with role: `name`, `service_type` and `description` (see examples) |
 | `keystone_endpoints` | `[ ]` | Array of hash with role: `service_name`, `region`, `public_url`, `internal_url` and `admin_url` (see examples) |
 | `keystone_log_dir` | `/var/log/keystone` | Keystone log directory (it must exists) |
-| `keystone_hostname` | `localhost` | Hostname used to reach the Keystone server (used internally to create endpoints and test the service) |
+| `keystone_hostname` | `localhost` | Hostname/IP used internally during configuration. localhost is usually ok |
 
 
 Dependencies

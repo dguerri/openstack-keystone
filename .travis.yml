@@ -2,9 +2,13 @@
 language: python
 python: "2.7"
 
+
 before_install:
   # Make sure everything's up to date.
+  - sudo apt-get install python-software-properties
+  - sudo add-apt-repository -y cloud-archive:icehouse
   - sudo apt-get update -qq
+
 
 install:
   # Install Ansible.
@@ -14,6 +18,7 @@ install:
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
 
 script:
   # Check the role/playbook's syntax.
@@ -33,9 +38,9 @@ script:
 
   # Test Keystone setup
   - >
-    keystone --token 'os token' --endpoint http://localhost:35357/v2.0
+    keystone --os-token 'os token' --os-endpoint http://localhost:35357/v2.0
     service-list | grep keystone
 
   - >
-    keystone --token 'os token' --endpoint http://localhost:35357/v2.0
+    keystone --os-token 'os token' --os-endpoint http://localhost:35357/v2.0
     endpoint-list
