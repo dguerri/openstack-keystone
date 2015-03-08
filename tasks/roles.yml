@@ -1,7 +1,8 @@
 ---
 
 #
-# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
+# Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>
+#
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,16 +18,16 @@
 # limitations under the License.
 #
 
-- name: Add admin role to user admin in tenant admin
-  keystone_user: role=admin
-                 user=admin
-                 tenant=admin
-                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-                 token="{{ admin_token }}"
-
-- name: Add _member_ role to user demo in tenant demo
-  keystone_user: role=_member_
-                 user=demo
-                 tenant=demo
-                 endpoint="http://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
-                 token="{{ admin_token }}"
+- name: Add Keystone roles to defined users in defined tenants
+  keystone_user: >
+    role="{{ item.name }}"
+    user="{{ item.user }}"
+    tenant="{{ item.tenant }}"
+    endpoint="{{ keystone_protocol }}://{{ keystone_admin_bind_host }}:{{ keystone_admin_port }}/v2.0"
+    token="{{ keystone_admin_token }}"
+    state="{{ item.state|default('present') }}"
+  register: result
+  until: not result|failed
+  retries: "{{ keystone_api_retries }}"
+  delay: "{{ keystone_api_retries_delay }}"
+  with_items: keystone_roles

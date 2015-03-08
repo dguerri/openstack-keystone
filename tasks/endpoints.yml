@@ -1,7 +1,8 @@
 ---
 
 #
-# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
+# Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>
+#
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,35 +18,25 @@
 # limitations under the License.
 #
 
-- name: "Dump service list"
-  shell: keystone service-list
-  register: service_list
-  changed_when: false
-  environment: openstack_service_env
 
-- name: "Dump endpoint list"
-  shell: keystone endpoint-list
-  register: endpoint_list
-  changed_when: false
-  environment: openstack_service_env
+- name: Create Keystone services
+  keystone_service: >
+    name="{{ item.name }}"
+    service_type="{{ item.service_type }}"
+    description="{{ item.description|default('Not provided') }}"
+    endpoint="{{ keystone_protocol }}://{{ keystone_admin_bind_host }}:{{ keystone_admin_port }}/v2.0"
+    token="{{ keystone_admin_token }}"
+    state="{{ item.state|default('present') }}"
+  with_items: keystone_services
 
-- name: Create the service entity for the identity service
-  shell: keystone service-create --name keystone --type identity --description="OpenStack Identity"
-  environment: openstack_service_env
-  when: "service_list.stdout.find('keystone') == -1"
-
-- name: "Dump identity service id"
-  shell: keystone service-list | awk '/ identity / {print $2}'
-  register: identity_service_id
-  changed_when: false
-  environment: openstack_service_env
-
-- name: Create the API endpoint for the identity service
-  shell: >
-    keystone endpoint-create \
-      --service-id={{ identity_service_id.stdout }} \
-      --publicurl={{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_port }}/v2.0 \
-      --internalurl={{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_port }}/v2.0 \
-      --adminurl={{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0
-  when: "endpoint_list.stdout.find('{{ identity_service_id.stdout }}') == -1"
-  environment: openstack_service_env
+- name: Create Keystone endpoints
+  keystone_endpoint: >
+    service_name="{{ item.service_name }}"
+    region="{{ item.region|default(keystone_default_region) }}"
+    public_url="{{ item.public_url }}"
+    internal_url="{{ item.internal_url }}"
+    admin_url="{{ item.admin_url }}"
+    endpoint="{{ keystone_protocol }}://{{ keystone_admin_bind_host }}:{{ keystone_admin_port }}/v2.0"
+    token="{{ keystone_admin_token }}"
+    state="{{ item.state|default('present') }}"
+  with_items: keystone_endpoints

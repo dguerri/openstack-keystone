@@ -1,15 +1,17 @@
+[![Build Status](https://travis-ci.org/dguerri/openstack-keystone.svg)](https://travis-ci.org/dguerri/openstack-keystone)
+
 Keystone
 =========
 
-OpenStack Keystone identity service installation
+OpenStack Keystone identity service installation.
 
-_Tested on Ubuntu Precise (12.04) and Trusty (14.04)_
+_Tested on Ubuntu Precise (12.04) and Trusty (14.04)_ with Juno.
+
 
 Requirements
 ------------
 
-A MySQL server. See `mysql_hostname`, `mysql_admin_username` and
-`mysql_rootpass` below.
+A DBMS already configured with a user and a database (when applicable).
 
 
 Role Variables
@@ -17,25 +19,22 @@ Role Variables
 
 ### Keystone (set by this role)
 
-| Name | Default value | Description | Note |
-|---  |---  |---  |--- |
-| `admin_pass` | `admin_pass_default` | Desired admin password ||
-| `admin_token` | `admin_token_default` | Desired service token ||
-| `demo_pass` | `demo_pass_default` | Desired demo password ||
-| `keystone_admin_port` | `35357` | Desired keystone admin service port ||
-| `keystone_dbpass` | `keystone_dbpass_default` | Desired keystone user password for the keystone database ||
-| `keystone_hostname` | `localhost` | Hostname/IP address where this role runs, it will be used to set keystone endpoints ||
-| `keystone_port` | `5000` | Desired keystone service port ||
-| `keystone_protocol` | `http` | Desired keystone protocol (http/https) | WiP, do not use. |
+| Name | Default value | Description |
+|---  |---  |---  |
+| `keystone_database_url` | `sqlite:////var/lib/keystone/keystone.db` | Database URI |
+| `keystone_admin_bind_host` | `0.0.0.0` | On which IP Keystone admin service should listen on |
+| `keystone_admin_port` | `35357` | Desired Keystone admin service port |
+| `keystone_bind_host` | `0.0.0.0` | On which IP Keystone public service should listen on |
+| `keystone_port` | `5000` | Desired Keystone service port |
+| `keystone_protocol` | `http` | Desired Keystone protocol (http/https) - WiP, do not use. |
+| `keystone_admin_token` | `keystone_admin_token` | Desired service token |
+| `keystone_tenants` | `[ ]` | Array of of hash with tenant `name` and `description` (see examples) |
+| `keystone_users` | `[ ]` | Array of hash with user: `name`, `password`, `tenant` and `email` (see examples) |
+| `keystone_roles` | `[ ]` | Array of hash with role: `name`, `user` and `tenant` (see examples) |
+| `keystone_services` | `[ ]` | Array of hash with role: `name`, `service_type` and `description` (see examples) |
+| `keystone_endpoints` | `[ ]` | Array of hash with role: `service_name`, `region`, `public_url`, `internal_url` and `admin_url` (see examples) |
+| `keystone_log_dir` | `/var/log/keystone` | Keystone log directory (it must exists) |
 
-
-### MySQL (must exist)
-
-| Name | Default value | Description | Note |
-|---  |---  |---  |--- |
-| `mysql_admin_username` | `root` | MySQL admin username ||
-| `mysql_hostname` | `localhost` | MySQL server address ||
-| `mysql_rootpass` | `mysql_root_default` | MySQL admin password ||
 
 Dependencies
 ------------
@@ -48,12 +47,32 @@ Example Playbook
     - hosts: keystone001
       roles:
         - role: openstack-keystone
-          mysql_rootpass: "{{ MYSQL_ROOT }}"
-          keystone_dbpass: "{{ KEYSTONEDB_PASS }}"
-          admin_token: "{{ ADMIN_TOKEN }}"
-          admin_pass: "{{ ADMIN_PASS }}"
-          demo_pass: "{{ DEMO_PASS }}"
-          keystone_hostname: "{{ ansible_eth0.ipv4.address }}"
+          keystone_database_url: "mysql://{{ MYSQL_KEYSTONE_USER }}:{{ MYSQL_KEYSTONE_PASS }}@{{ DATABASE_HOSTNAME }}/{{ MYSQL_KEYSTONE_DB }}"
+          keystone_admin_token: "{{ ADMIN_TOKEN }}"
+          keystone_tenants:
+            - { name: admin, description: "Admin tenant" }
+            - { name: service, description: "Service tenant" }
+            - { name: demo, description: "Demo tenant"  }
+          keystone_users:
+            - { name: admin, password: "{{ ADMIN_PASS }}", tenant: admin }
+            - { name: demo, password: "{{ DEMO_PASS }}", tenant: demo }
+            - { name: glance, password: "{{ GLANCE_PASS }}", tenant: service }
+          keystone_roles:
+            - { name: admin, user: admin, tenant: admin }
+            - { name: _member_, user: demo, tenant: demo  }
+            - { name: admin, user: glance, tenant: service  }
+          keystone_services:
+            - { name: keystone, service_type: identity }
+            - { name: glance, service_type: image }
+          keystone_endpoints:
+            - service_name: keystone
+              public_url: "http://keystone:5000/v2.0"
+              internal_url: "http://keystone:5000/v2.0"
+              admin_url: "http://keystone:35357/v2.0"
+            - service_name: glance
+              public_url: "http://glance:9292/"
+              internal_url: "http://glance:9292/"
+              admin_url: "http://glance:9292/"
 
 ---
 
@@ -67,7 +86,7 @@ License
 
 Apache
 
-Author Information
+Copyright
 ------------------
 
-Davide Guerri - davide.guerri@gmail.com
+Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>

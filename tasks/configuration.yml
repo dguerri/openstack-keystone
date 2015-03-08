@@ -1,7 +1,8 @@
 ---
 
 #
-# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
+# Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>
+#
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,20 +18,44 @@
 # limitations under the License.
 #
 
-- name: Configure keystone
-  ini_file: dest=/etc/keystone/keystone.conf
-            section="{{ item.section }}"
-            option="{{ item.option }}"
-            value="{{ item.value }}"
+- name: Configure Keystone
+  ini_file: >
+    dest=/etc/keystone/keystone.conf
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
   with_items:
     - section:  DEFAULT
       option:   admin_token
-      value:    "{{ admin_token }}"
+      value:    "{{ keystone_admin_token }}"
     - section:  DEFAULT
       option:   log_dir
-      value:    /var/log/keystone
-    - section:  database
-      option:   connection
-      value:    "mysql://keystone:{{ keystone_dbpass }}@{{ mysql_hostname }}/keystone"
+      value:    "{{ keystone_log_dir }}"
+    - section:  DEFAULT
+      option:   admin_bind_host
+      value:    "{{ keystone_admin_bind_host }}"
+    - section:  DEFAULT
+      option:   admin_port
+      value:    "{{ keystone_admin_port }}"
+    - section:  DEFAULT
+      option:   public_bind_host
+      value:    "{{ keystone_bind_host }}"
+    - section:  DEFAULT
+      option:   public_port
+      value:    "{{ keystone_port }}"
   notify:
-    - Restart keystone
+    - Restart Keystone
+
+- name: Configure Keystone database
+  ini_file: >
+    dest=/etc/keystone/keystone.conf
+    section="{{ item.section }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
+  with_items:
+    - section: database
+      option: connection
+      value: "{{ keystone_database_url }}"
+  notify:
+    - Sync Keystone database
+    - Restart Keystone

@@ -1,0 +1,29 @@
+---
+
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: openstack-keystone
+      keystone_admin_token: "os token"
+      keystone_admin_bind_host: 127.0.0.1
+      keystone_bind_host: 127.0.0.1
+      keystone_tenants:
+        - { name: admin, description: "Admin tenant" }
+        - { name: service, description: "Service tenant" }
+        - { name: demo, description: "Demo tenant"  }
+      keystone_users:
+        - { name: admin, password: "admin password", tenant: admin }
+        - { name: demo, password: "demo password", tenant: demo }
+        - { name: glance, password: "glance password", tenant: service }
+      keystone_roles:
+        - { name: admin, user: admin, tenant: admin }
+        - { name: _member_, user: demo, tenant: demo  }
+        - { name: admin, user: glance, tenant: service  }
+      keystone_services:
+        - { name: keystone, service_type: identity }
+        - { name: glance, service_type: image }
+      keystone_endpoints:
+        - service_name: keystone
+          public_url: "http://127.0.0.1:5000/v2.0"
+          internal_url: "http://127.0.0.1:5000/v2.0"
+          admin_url: "http://127.0.0.1:35357/v2.0"

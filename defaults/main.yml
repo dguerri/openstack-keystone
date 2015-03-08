@@ -1,7 +1,8 @@
 ---
 
 #
-# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
+# Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>
+#
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,16 +19,24 @@
 #
 
 # Keystone
-admin_pass: admin_pass_default
-admin_token: admin_token_default
-demo_pass: demo_pass_default
+keystone_admin_token: keystone_admin_token
+keystone_admin_bind_host: 0.0.0.0
 keystone_admin_port: 35357
-keystone_dbpass: keystone_dbpass_default
 keystone_hostname: localhost
+keystone_bind_host: 0.0.0.0
 keystone_port: 5000
 keystone_protocol: http
+keystone_log_dir: /var/log/keystone
+keystone_tenants: []
+keystone_users: []
+keystone_roles: []
+keystone_services: []
+keystone_endpoints: []
+keystone_default_region: regionOne
 
-# MySQL
-mysql_admin_username: root
-mysql_hostname: localhost
-mysql_rootpass: mysql_root_default
+# Database
+keystone_database_url: sqlite:////var/lib/keystone/keystone.db
+
+# Misc
+keystone_api_retries: 3
+keystone_api_retries_delay: 5
