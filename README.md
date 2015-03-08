@@ -34,6 +34,7 @@ Role Variables
 | `keystone_services` | `[ ]` | Array of hash with role: `name`, `service_type` and `description` (see examples) |
 | `keystone_endpoints` | `[ ]` | Array of hash with role: `service_name`, `region`, `public_url`, `internal_url` and `admin_url` (see examples) |
 | `keystone_log_dir` | `/var/log/keystone` | Keystone log directory (it must exists) |
+| `keystone_hostname` | `localhost` | Hostname used to reach the Keystone server (used internally to create endpoints and test the service) |
 
 
 Dependencies

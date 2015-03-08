@@ -24,7 +24,7 @@
     password="{{ item.password }}"
     tenant="{{ item.tenant }}"
     email="{{ item.email|default('nobody@localhost') }}"
-    endpoint="{{ keystone_protocol }}://{{ keystone_admin_bind_host }}:{{ keystone_admin_port }}/v2.0"
+    endpoint="{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0"
     token="{{ keystone_admin_token }}"
     state="{{ item.state|default('present') }}"
   with_items: keystone_users

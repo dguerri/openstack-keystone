@@ -19,6 +19,7 @@
 #
 
 # Keystone
+keystone_hostname: localhost
 keystone_admin_token: keystone_admin_token
 keystone_admin_bind_host: 0.0.0.0
 keystone_admin_port: 35357

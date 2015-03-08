@@ -29,7 +29,7 @@
   service: name=keystone state=started
 - name: Wait Keystone admin serice
   wait_for: >
-    host={{ keystone_admin_bind_host }}
+    host={{ keystone_hostname }}
     port={{ keystone_admin_port }}
 
 - include: maintenance.yml
