@@ -3,9 +3,10 @@
 Keystone
 =========
 
-OpenStack Keystone identity service installation
+OpenStack Keystone identity service installation.
 
-_Tested on Ubuntu Precise (12.04) and Trusty (14.04)_
+_Tested on Ubuntu Precise (12.04) and Trusty (14.04)_ with Juno.
+
 
 Requirements
 ------------
@@ -18,21 +19,21 @@ Role Variables
 
 ### Keystone (set by this role)
 
-| Name | Default value | Description | Note |
-|---  |---  |---  |--- |
-| `keystone_database_url` | `sqlite:////var/lib/keystone/keystone.db` | Database URI ||
-| `keystone_admin_bind_host` | `0.0.0.0` | On which IP Keystone admin service should listen on ||
-| `keystone_admin_port` | `35357` | Desired Keystone admin service port ||
-| `keystone_bind_host` | `0.0.0.0` | On which IP Keystone public service should listen on ||
-| `keystone_port` | `5000` | Desired Keystone service port ||
-| `keystone_protocol` | `http` | Desired Keystone protocol (http/https) | WiP, do not use. |
-| `keystone_admin_token` | `keystone_admin_token` | Desired service token ||
-| `keystone_tenants` | [] | Array of of hash with tenant `name` and `description` (see examples) ||
-| `keystone_users` | [] | Array of hash with user: `name`, `password`, `tenant` and `email` (see examples) ||
-| `keystone_roles` | [] | Array of hash with role: `name`, `user` and `tenant` (see examples) ||
-| `keystone_services` | [] | Array of hash with role: `name`, `service_type` and `description` (see examples) ||
-| `keystone_endpoints` | [] | Array of hash with role: `service_name`, `region`, `public_url`, `internal_url` and `admin_url` (see examples) ||
-| `keystone_log_dir` | `/var/log/keystone` | Keystone log directoy (it must exists) ||
+| Name | Default value | Description |
+|---  |---  |---  |
+| `keystone_database_url` | `sqlite:////var/lib/keystone/keystone.db` | Database URI |
+| `keystone_admin_bind_host` | `0.0.0.0` | On which IP Keystone admin service should listen on |
+| `keystone_admin_port` | `35357` | Desired Keystone admin service port |
+| `keystone_bind_host` | `0.0.0.0` | On which IP Keystone public service should listen on |
+| `keystone_port` | `5000` | Desired Keystone service port |
+| `keystone_protocol` | `http` | Desired Keystone protocol (http/https) - WiP, do not use. |
+| `keystone_admin_token` | `keystone_admin_token` | Desired service token |
+| `keystone_tenants` | `[ ]` | Array of of hash with tenant `name` and `description` (see examples) |
+| `keystone_users` | `[ ]` | Array of hash with user: `name`, `password`, `tenant` and `email` (see examples) |
+| `keystone_roles` | `[ ]` | Array of hash with role: `name`, `user` and `tenant` (see examples) |
+| `keystone_services` | `[ ]` | Array of hash with role: `name`, `service_type` and `description` (see examples) |
+| `keystone_endpoints` | `[ ]` | Array of hash with role: `service_name`, `region`, `public_url`, `internal_url` and `admin_url` (see examples) |
+| `keystone_log_dir` | `/var/log/keystone` | Keystone log directory (it must exists) |
 
 
 Dependencies
