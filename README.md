@@ -21,16 +21,18 @@ Role Variables
 | Name | Default value | Description | Note |
 |---  |---  |---  |--- |
 | `keystone_database_url` | `sqlite:////var/lib/keystone/keystone.db` | Database URI ||
-| `keystone_hostname` | `localhost` | Hostname/IP address where this role runs, it will be used to set keystone endpoints ||
-| `keystone_admin_port` | `35357` | Desired keystone admin service port ||
-| `keystone_port` | `5000` | Desired keystone service port ||
-| `keystone_protocol` | `http` | Desired keystone protocol (http/https) | WiP, do not use. |
+| `keystone_admin_bind_host` | `0.0.0.0` | On which IP Keystone admin service should listen on ||
+| `keystone_admin_port` | `35357` | Desired Keystone admin service port ||
+| `keystone_bind_host` | `0.0.0.0` | On which IP Keystone public service should listen on ||
+| `keystone_port` | `5000` | Desired Keystone service port ||
+| `keystone_protocol` | `http` | Desired Keystone protocol (http/https) | WiP, do not use. |
 | `keystone_admin_token` | `keystone_admin_token` | Desired service token ||
 | `keystone_tenants` | [] | Array of of hash with tenant `name` and `description` (see examples) ||
 | `keystone_users` | [] | Array of hash with user: `name`, `password`, `tenant` and `email` (see examples) ||
 | `keystone_roles` | [] | Array of hash with role: `name`, `user` and `tenant` (see examples) ||
 | `keystone_services` | [] | Array of hash with role: `name`, `service_type` and `description` (see examples) ||
 | `keystone_endpoints` | [] | Array of hash with role: `service_name`, `region`, `public_url`, `internal_url` and `admin_url` (see examples) ||
+| `keystone_log_dir` | `/var/log/keystone` | Keystone log directoy (it must exists) ||
 
 
 Dependencies
@@ -45,7 +47,6 @@ Example Playbook
       roles:
         - role: openstack-keystone
           keystone_database_url: "mysql://{{ MYSQL_KEYSTONE_USER }}:{{ MYSQL_KEYSTONE_PASS }}@{{ DATABASE_HOSTNAME }}/{{ MYSQL_KEYSTONE_DB }}"
-          keystone_hostname: "keystone"
           keystone_admin_token: "{{ ADMIN_TOKEN }}"
           keystone_tenants:
             - { name: admin, description: "Admin tenant" }

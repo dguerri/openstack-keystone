@@ -30,9 +30,21 @@
       value:    "{{ keystone_admin_token }}"
     - section:  DEFAULT
       option:   log_dir
-      value:    /var/log/keystone
+      value:    "{{ keystone_log_dir }}"
+    - section:  DEFAULT
+      option:   admin_bind_host
+      value:    "{{ keystone_admin_bind_host }}"
+    - section:  DEFAULT
+      option:   admin_port
+      value:    "{{ keystone_admin_port }}"
+    - section:  DEFAULT
+      option:   public_bind_host
+      value:    "{{ keystone_bind_host }}"
+    - section:  DEFAULT
+      option:   public_port
+      value:    "{{ keystone_port }}"
   notify:
-    - Reload Keystone
+    - Restart Keystone
 
 - name: Configure Keystone database
   ini_file: >
@@ -46,4 +58,4 @@
       value: "{{ keystone_database_url }}"
   notify:
     - Sync Keystone database
-    - Reload Keystone
+    - Restart Keystone

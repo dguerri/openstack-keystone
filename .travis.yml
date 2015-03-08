@@ -34,7 +34,7 @@ script:
   # Test Keystone setup
   - >
     keystone --token 'os token' --endpoint http://localhost:35357/v2.0
-    service-list | grep glance
+    service-list | grep keystone
 
   - >
     keystone --token 'os token' --endpoint http://localhost:35357/v2.0

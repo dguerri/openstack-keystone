@@ -20,15 +20,19 @@
 
 # Keystone
 keystone_admin_token: keystone_admin_token
+keystone_admin_bind_host: 0.0.0.0
 keystone_admin_port: 35357
 keystone_hostname: localhost
+keystone_bind_host: 0.0.0.0
 keystone_port: 5000
 keystone_protocol: http
+keystone_log_dir: /var/log/keystone
 keystone_tenants: []
 keystone_users: []
 keystone_roles: []
 keystone_services: []
 keystone_endpoints: []
+keystone_default_region: regionOne
 
 # Database
 keystone_database_url: sqlite:////var/lib/keystone/keystone.db

@@ -4,8 +4,9 @@
   remote_user: root
   roles:
     - role: openstack-keystone
-      keystone_hostname: "localhost"
       keystone_admin_token: "os token"
+      keystone_admin_bind_host: 127.0.0.1
+      keystone_bind_host: 127.0.0.1
       keystone_tenants:
         - { name: admin, description: "Admin tenant" }
         - { name: service, description: "Service tenant" }
@@ -23,10 +24,6 @@
         - { name: glance, service_type: image }
       keystone_endpoints:
         - service_name: keystone
-          public_url: "http://localhost:5000/v2.0"
-          internal_url: "http://localhost:5000/v2.0"
-          admin_url: "http://localhost:35357/v2.0"
-        - service_name: glance
-          public_url: "http://localhost:9292/"
-          internal_url: "http://localhost:9292/"
-          admin_url: "http://localhost:9292/"
+          public_url: "http://127.0.0.1:5000/v2.0"
+          internal_url: "http://127.0.0.1:5000/v2.0"
+          admin_url: "http://127.0.0.1:35357/v2.0"

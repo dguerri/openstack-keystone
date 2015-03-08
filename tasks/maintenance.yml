@@ -19,9 +19,10 @@
 #
 
 - name: Add a cronjob to remove Keystone expired token
-  cron: name="Remove keystone expired token"
-        minute=0
-        hour=*/1
-        user=keystone
-        job="/usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&1"
-        cron_file="remove-keystone-expired-tokens"
+  cron: >
+    name="Remove keystone expired token"
+    minute=0
+    hour=*/1
+    user=keystone
+    job="keystone-manage token_flush > {{ keystone_log_dir }}/keystone-tokenflush.log 2>&1"
+    cron_file="remove-keystone-expired-tokens"
