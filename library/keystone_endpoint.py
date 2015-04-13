@@ -25,7 +25,6 @@
 DOCUMENTATION = '''
 ---
 module: keystone_endpoint
-version_added: "1.2"
 short_description: Manage OpenStack Identity (keystone) endpoints
 description:
    - Manage endpoints from OpenStack.
@@ -45,7 +44,6 @@ options:
         - The tenant login_user belongs to
      required: false
      default: None
-     version_added: "1.3"
    service_name:
      description:
         - OpenStack service name (e.g. keystone)
