@@ -1,0 +1,9 @@
+---
+
+- name: Set service facts
+  set_fact: keystone_service="keystone"
+  when: ansible_os_family == 'Debian'
+
+- name: Set service facts
+  set_fact: keystone_service="openstack-keystone"
+  when: ansible_os_family == 'RedHat'

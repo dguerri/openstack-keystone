@@ -1,8 +1,7 @@
 ---
 
 #
-# Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>
-#
+# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,24 +17,9 @@
 # limitations under the License.
 #
 
-- meta: flush_handlers
+- name: Install keystone service and client
+  apt: name="{{ item }}" state=present
+  with_items:
+    - keystone
+    - python-keystoneclient
 
-- include: facts.yml
-- include: packages.yml
-- include: configuration.yml
-
-- meta: flush_handlers
-
-- name: Make sure Keystone is started
-  service: name=keystone state=started
-- name: Wait Keystone admin serice
-  wait_for: >
-    host={{ keystone_hostname }}
-    port={{ keystone_admin_port }}
-
-- include: maintenance.yml
-
-- include: endpoints.yml
-- include: tenants.yml
-- include: users.yml
-- include: roles.yml
