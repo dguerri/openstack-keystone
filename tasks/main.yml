@@ -27,7 +27,7 @@
 - meta: flush_handlers
 
 - name: Make sure Keystone is started
-  service: name=keystone state=started
+  service: name={{ keystone_service }} state=started
 - name: Wait Keystone admin serice
   wait_for: >
     host={{ keystone_hostname }}
