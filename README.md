@@ -16,7 +16,7 @@ Requirements
 ------------
 
 A DBMS already configured with a user and a database (when applicable).
-
+For RHEL/CentOS, RHOSP or RDO repositories are needed.
 
 Role Variables
 --------------
