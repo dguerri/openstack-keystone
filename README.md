@@ -85,6 +85,9 @@ A complete Ansible playbook demo, which uses this role, is available on Github (
 
 ---
 
+Credits
+-------
+RedHat suport implemented by Abel Boldú <abel.boldu@gmx.com>
 
 License
 -------
