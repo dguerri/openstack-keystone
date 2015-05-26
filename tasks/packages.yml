@@ -1,8 +1,7 @@
 ---
 
 #
-# Copyright (c) 2015 Davide Guerri <davide.guerri@gmail.com>
-#
+# Copyright (c) 2014 Davide Guerri <davide.guerri@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,10 +17,10 @@
 # limitations under the License.
 #
 
-- name: Install Keystone server
-  apt: name=keystone state=present
-  notify:
-    - Restart Keystone
+- include: packages_redhat.yml
+  when: ansible_os_family == 'RedHat'
 
-- name: Install Keystone client
-  apt: name=python-keystoneclient state=present
+- include: packages_debian.yml
+  when: ansible_os_family == 'Debian'
+
+
