@@ -3,8 +3,8 @@ Keystone OpenStack Ansible Role
 =========
 
 **Status**
-* [![Build Status](https://travis-ci.org/dguerri/openstack-keystone.svg?branch=master)](https://travis-ci.org/dguerri/openstack-keystone) on master branch
-* [![Build Status](https://travis-ci.org/dguerri/openstack-keystone.svg?branch=development)](https://travis-ci.org/dguerri/openstack-keystone) on development branch
+* [![Build Status](https://travis-ci.org/openstack-ansible-galaxy/openstack-keystone.svg?branch=master)](https://travis-ci.org/openstack-ansible-galaxy/openstack-keystone) on master branch
+* [![Build Status](https://travis-ci.org/openstack-ansible-galaxy/openstack-keystone.svg?branch=development)](https://travis-ci.org/openstack-ansible-galaxy/openstack-keystone) on development branch
 * [![Ansible Galaxy](http://img.shields.io/badge/dguerri-openstack--keystone-blue.svg)](https://galaxy.ansible.com/list#/roles/1770) on Ansible Galaxy
 
 OpenStack Keystone identity service installation.
